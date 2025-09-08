@@ -9,6 +9,7 @@ use App\Filament\Resources\TInvitationCustomFields\Schemas\TInvitationCustomFiel
 use App\Filament\Resources\TInvitationCustomFields\Tables\TInvitationCustomFieldsTable;
 use App\Models\TInvitationCustomField;
 use BackedEnum;
+use Filafly\Icons\Phosphor\Enums\Phosphor;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
@@ -18,7 +19,7 @@ class TInvitationCustomFieldResource extends Resource
 {
     protected static ?string $model = TInvitationCustomField::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Phosphor::PencilSimpleLine;
 
     protected static ?string $recordTitleAttribute = 'Custom Field';
     protected static ?string $navigationLabel = 'Invitation Custom Fields';

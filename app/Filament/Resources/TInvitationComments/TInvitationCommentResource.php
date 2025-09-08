@@ -9,16 +9,19 @@ use App\Filament\Resources\TInvitationComments\Schemas\TInvitationCommentForm;
 use App\Filament\Resources\TInvitationComments\Tables\TInvitationCommentsTable;
 use App\Models\TInvitationComment;
 use BackedEnum;
+use Filafly\Icons\Phosphor\Enums\Phosphor;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Hexters\HexaLite\HasHexaLite;
 
 class TInvitationCommentResource extends Resource
 {
+    use HasHexaLite;
     protected static ?string $model = TInvitationComment::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Phosphor::ChatTeardropText;
 
     protected static ?string $recordTitleAttribute = 'Comment';
     protected static ?string $navigationLabel = 'Invitation Comments';
@@ -47,6 +50,16 @@ class TInvitationCommentResource extends Resource
             'index' => ListTInvitationComments::route('/'),
             'create' => CreateTInvitationComment::route('/create'),
             'edit' => EditTInvitationComment::route('/{record}/edit'),
+        ];
+    }
+
+    public function defineGates(): array
+    {
+        return [
+            'comment.index' => __('Allows viewing the comment list'),
+            'comment.create' => __('Allows creating a new comment'),
+            'comment.edit' => __('Allows updating comments'),
+            'comment.delete' => __('Allows deleting comments'),
         ];
     }
 }

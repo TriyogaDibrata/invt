@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('t_invitations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('invitation_type_id')->constrained('m_invitation_types')->onDelete('cascade');
             $table->foreignId('template_id')->constrained('m_templates')->onDelete('cascade');
             $table->string('title');
             $table->text('description')->nullable();

@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\TInvitations\Schemas;
 
+use App\Models\MTemplate;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\DateTimePicker;
 use Filament\Forms\Components\Select;
@@ -9,6 +10,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TimePicker;
 use Filament\Schemas\Schema;
+use Illuminate\Support\Facades\Auth;
 
 class TInvitationForm
 {
@@ -18,19 +20,30 @@ class TInvitationForm
             ->components([
                 TextInput::make('user_id')
                     ->required()
-                    ->numeric(),
-                TextInput::make('template_id')
-                    ->required()
-                    ->numeric(),
+                    ->numeric()
+                    ->hidden()
+                    ->default(fn() => Auth::id()),
+                Select::make('template_id')
+                    ->label('Template')
+                    ->placeholder('Select a template')
+                    ->options(MTemplate::all()->pluck('name', 'id'))
+                    ->searchable()
+                    ->required(),
                 TextInput::make('title')
                     ->required(),
                 Textarea::make('description')
                     ->columnSpanFull(),
                 DatePicker::make('event_date')
+                    ->minDate(fn() => now())
+                    ->native(false)
                     ->required(),
                 TimePicker::make('event_time')
+                    ->native(false)
                     ->required(),
-                DateTimePicker::make('event_date_time'),
+                DateTimePicker::make('event_date_time')
+                    ->native(false)
+                    ->minDate(fn() => now())
+                    ->required(),
                 TextInput::make('location'),
                 TextInput::make('location_url'),
                 TextInput::make('slug')

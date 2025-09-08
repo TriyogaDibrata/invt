@@ -11,9 +11,12 @@
     "require": {
         "php": "^8.2",
         "filafly/brisk": "^1.0",
+        "filafly/filament-phosphor-icons": "^2.0",
         "filament/filament": "^4.0",
+        "hexters/hexa-lite": "^3.0",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "resma/filament-awin-theme": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

@@ -9,16 +9,19 @@ use App\Filament\Resources\TInvitationGuests\Schemas\TInvitationGuestForm;
 use App\Filament\Resources\TInvitationGuests\Tables\TInvitationGuestsTable;
 use App\Models\TInvitationGuest;
 use BackedEnum;
+use Filafly\Icons\Phosphor\Enums\Phosphor;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
+use Hexters\HexaLite\HasHexaLite;
 
 class TInvitationGuestResource extends Resource
 {
+    use HasHexaLite;
     protected static ?string $model = TInvitationGuest::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static string|BackedEnum|null $navigationIcon = Phosphor::UsersThree;
 
     protected static ?string $recordTitleAttribute = 'Guest';
 
@@ -48,6 +51,16 @@ class TInvitationGuestResource extends Resource
             'index' => ListTInvitationGuests::route('/'),
             'create' => CreateTInvitationGuest::route('/create'),
             'edit' => EditTInvitationGuest::route('/{record}/edit'),
+        ];
+    }
+
+    public function defineGates(): array
+    {
+        return [
+            'guest.index' => __('Allows viewing the guest list'),
+            'guest.create' => __('Allows creating a new guest'),
+            'guest.edit' => __('Allows updating guests'),
+            'guest.delete' => __('Allows deleting guests'),
         ];
     }
 }

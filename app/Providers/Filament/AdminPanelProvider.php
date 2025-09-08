@@ -2,6 +2,8 @@
 
 namespace App\Providers\Filament;
 
+use Filafly\Icons\Phosphor\Enums\Phosphor;
+use Filafly\Icons\Phosphor\PhosphorIcons;
 use Filafly\Themes\Brisk\BriskTheme;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -11,14 +13,17 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
+use Filament\View\PanelsIconAlias;
 use Filament\Widgets\AccountWidget;
 use Filament\Widgets\FilamentInfoWidget;
+use Hexters\HexaLite\HexaLite;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Resma\FilamentAwinTheme\FilamentAwinTheme;
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -32,6 +37,7 @@ class AdminPanelProvider extends PanelProvider
             ->colors([
                 'primary' => Color::Amber,
             ])
+            ->sidebarCollapsibleOnDesktop(true)
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -57,7 +63,13 @@ class AdminPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->plugins([
-                BriskTheme::make()
+                FilamentAwinTheme::make(),
+                HexaLite::make(),
+                PhosphorIcons::make()->overrideAliases([
+                    PanelsIconAlias::SIDEBAR_EXPAND_BUTTON => Phosphor::Sidebar,
+                    PanelsIconAlias::SIDEBAR_COLLAPSE_BUTTON => Phosphor::SidebarSimple,
+                    PanelsIconAlias::PAGES_DASHBOARD_NAVIGATION_ITEM => Phosphor::PresentationChart,
+                ]),
             ]);
     }
 }

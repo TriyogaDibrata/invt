@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('t_invitation_custom_fields', function (Blueprint $table) {
+        Schema::create('m_custom_fields', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('invitation_id')->constrained('t_invitations')->onDelete('cascade');
+            $table->foreignId('invitation_type_id')->constrained('m_invitation_types')->onDelete('cascade');
             $table->string('field_name');
-            $table->string('field_value')->nullable();
+            $table->string('field_type');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('t_invitation_custom_fields');
+        Schema::dropIfExists('m_custom_fields');
     }
 };
